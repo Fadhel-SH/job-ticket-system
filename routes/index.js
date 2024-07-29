@@ -41,9 +41,13 @@ router.post('/login', passport.authenticate('local', {
 
 // Logout route
 // This route handles user logout
-router.get('/logout', (req, res) => {
-  req.logout();
+router.get('/logout', (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
   res.redirect('/');
+});
 });
 
 // Offers routes

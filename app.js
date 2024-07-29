@@ -1,8 +1,9 @@
 const express = require('express');
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 
 // Load environment variables from .env file
@@ -26,7 +27,8 @@ app.use(session({
   secret: process.env.SESSION_SECRET, // Use the session secret from environment variables
   resave: false, // Do not save the session if unmodified
   saveUninitialized: false, // Do not save uninitialized sessions
-  store: new MongoStore({ mongooseConnection: mongoose.connection }) // Store sessions in MongoDB
+  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }) // Store sessions in MongoDB
+  // store: new MongoStore({ mongooseConnection: mongoose.connection }) // Store sessions in MongoDB
 }));
 
 // Initialize Passport middleware

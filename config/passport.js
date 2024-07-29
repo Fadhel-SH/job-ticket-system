@@ -1,39 +1,58 @@
-const LocalStrategy = require('passport-local').Strategy;
+// Require the User model
 const User = require('../models/User');
 
-module.exports = function(passport) {
-  // Use the local strategy for user authentication
-  passport.use(new LocalStrategy(async (username, password, done) => {
-    try {
-      // Find the user by username
-      const user = await User.findOne({ username });
-      if (!user) {
-        // If no user is found, return a false user and an error message
-        return done(null, false, { message: 'No user with that username' });
-      }
-      // Compare the provided password with the stored password
-      const isMatch = await user.comparePassword(password);
-      if (!isMatch) {
-        // If the passwords don't match, return a false user and an error message
-        return done(null, false, { message: 'Password incorrect' });
-      }
-      // If the user is found and the password is correct, return the user
-      return done(null, user);
-    } catch (error) {
-      // If any other error occurs, return the error
-      return done(error);
-    }
-  }));
+// Require the LocalStrategy from the passport-local package
+const LocalStrategy = require('passport-local').Strategy;
 
-  // Serialize the user to the session
+// Require the bcrypt library for password hashing
+const bcrypt = require('bcryptjs');
+
+// Export a function that configures the Passport.js authentication strategy
+module.exports = function(passport) {
+  // Configure the local strategy for Passport.js
+  passport.use(
+    new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
+      try {
+        // Find the user by their email
+        const user = await User.findOne({ email: email });
+
+        // If the user is not found, return a false user and an error message
+        if (!user) {
+          return done(null, false, { message: 'That email is not registered' });
+        }
+
+        // Compare the provided password with the hashed password in the database
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        // If the passwords match, return the user object
+        if (isMatch) {
+          return done(null, user);
+        // If the passwords don't match, return a false user and an error message
+        } else {
+          return done(null, false, { message: 'Password incorrect' });
+        }
+      } catch (err) {
+        // If there's an error, log it and return the error
+        console.error(err);
+        return done(err);
+      }
+    })
+  );
+
+  // Serialize the user object to store in the session
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
 
-  // Deserialize the user from the session
-  passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-      done(err, user);
-    });
+  // Deserialize the user object from the session
+  passport.deserializeUser(async (id, done) => {
+    try {
+      // Find the user by their ID and return the user object
+      const user = await User.findById(id);
+      done(null, user);
+    } catch (err) {
+      // If there's an error, return the error
+      done(err, null);
+    }
   });
 };
