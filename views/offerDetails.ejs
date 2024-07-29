@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offer Details</title>
+</head>
+<body>
+  <h1><%= offer.title %></h1>
+  <p><%= offer.description %></p>
+  <p>Price: <%= offer.price %></p>
+  <p>Best Offer: <%= offer.bestOffer %></p>
+  <p>Created by: <%= offer.createdBy.username %></p>
+
+  <% if (user && user.role === 'user') { %>
+    <form action="/offers/<%= offer._id %>/requests" method="POST">
+      <button type="submit">Request to Take</button>
+    </form>
+  <% } %>
+
+  <ul>
+    <% offer.requestedBy.forEach(requester => { %>
+      <li><%= requester.username %></li>
+    <% }) %>
+  </ul>
+
+  <a href="/offers">Back to Offers</a>
+</body>
+</html>

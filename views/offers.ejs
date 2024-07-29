@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offers</title>
+</head>
+<body>
+  <h1>Offers</h1>
+  <% if (user && user.role === 'customer') { %>
+    <form action="/offers" method="POST">
+      <input type="text" name="title" placeholder="Title" required>
+      <textarea name="description" placeholder="Description" required></textarea>
+      <input type="number" name="price" placeholder="Price">
+      <label>
+        Best Offer:
+        <input type="checkbox" name="bestOffer">
+      </label>
+      <button type="submit">Add Offer</button>
+    </form>
+  <% } %>
+  <ul>
+    <% offers.forEach(offer => { %>
+      <li>
+        <a href="/offers/<%= offer._id %>"><%= offer.title %></a>
+        <p><%= offer.description %></p>
+        <p>Price: <%= offer.price %></p>
+        <p>Best Offer: <%= offer.bestOffer %></p>
+        <p>Created by: <%= offer.createdBy.username %></p>
+      </li>
+    <% }) %>
+  </ul>
+  <a href="/">Home</a>
+</body>
+</html>
