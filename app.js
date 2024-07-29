@@ -3,6 +3,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 const dotenv = require('dotenv');
+const methodOverride = require('method-override');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -31,6 +32,9 @@ app.use(session({
 // Initialize Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Use the method-override middleware to allow overriding the HTTP method in forms
+app.use(methodOverride('_method'));
 
 // Set up routes
 app.use('/', require('./routes/index'));
