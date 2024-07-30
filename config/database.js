@@ -1,4 +1,8 @@
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
+// Load environment variables from .env file
+dotenv.config();
 
 // Connect to the database
 mongoose.connect(process.env.MONGODB_URI)

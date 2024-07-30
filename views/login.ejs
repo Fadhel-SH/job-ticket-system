@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
   <% include('layout', { title: 'Login', body: '' }) %>
   <div class="card">
     <h2>Login</h2>
-    <form action="/login" method="POST">
+    <form action="/login" method="POST" class="card">
       <label for="user">User:</label>
       <input type="user" id="user" name="user" required>
       <label for="password">Password:</label>

@@ -5,6 +5,7 @@ const passport = require('passport');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -37,6 +38,21 @@ app.use(passport.session());
 
 // Use the method-override middleware to allow overriding the HTTP method in forms
 app.use(methodOverride('_method'));
+
+// Use flash messages
+app.use(flash());
+
+// Global variables for flash messages
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
+
+
+// Serve static files from the 'public' directory
+app.use(express.static('public'));
 
 // Set up routes
 app.use('/', require('./routes/index'));
