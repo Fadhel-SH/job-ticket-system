@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 router.get('/register', (req, res) => {
   res.render('register', { user: req.user });
 });
-
+// POST Register route (assuming you have user registration logic)
 router.post('/register', async (req, res) => {
   const { username, password, role } = req.body;
   try {
@@ -34,6 +34,14 @@ router.post('/register', async (req, res) => {
 // These routes handle user authentication using Passport.js
 router.get('/login', (req, res, next) => {
   res.render('login', { user: req.user });
+});
+// POST Login route
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/offers',
+    failureRedirect: '/login',
+    failureFlash: true
+  })(req, res, next);
 });
 // Logout route
 // This route handles user logout
