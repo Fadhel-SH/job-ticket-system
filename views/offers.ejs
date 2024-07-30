@@ -4,32 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Offers</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+  <% include('layout', { title: 'Offers', body: '' }) %>
   <h1>Offers</h1>
   <% if (user && user.role === 'customer') { %>
-    <form action="/offers" method="POST">
-      <input type="text" name="title" placeholder="Title" required>
-      <textarea name="description" placeholder="Description" required></textarea>
-      <input type="number" name="price" placeholder="Price">
-      <label>
-        Best Offer:
-        <input type="checkbox" name="bestOffer">
-      </label>
-      <button type="submit">Add Offer</button>
-    </form>
+    <div class="card">
+      <form action="/offers" method="POST" class="offer-form">
+        <input type="text" name="title" placeholder="Title" required>
+        <textarea name="description" placeholder="Description" required></textarea>
+        <input type="number" name="price" placeholder="Price">
+        <button type="submit">Add Offer</button>
+      </form>
+    </div>
   <% } %>
-  <ul>
+  <div class="offers-container">
     <% offers.forEach(offer => { %>
-      <li>
-        <a href="/offers/<%= offer._id %>"><%= offer.title %></a>
+      <div class="offer-card">
+        <h2><%= offer.title %></h2>
         <p><%= offer.description %></p>
-        <p>Price: <%= offer.price %></p>
-        <p>Best Offer: <%= offer.bestOffer %></p>
-        <p>Created by: <%= offer.createdBy.username %></p>
-      </li>
+        <p><%= offer.price ? `Price: ${offer.price}` : 'Best Offer' %></p>
+      </div>
     <% }) %>
-  </ul>
-  <a href="/">Home</a>
+  </div>
+  
 </body>
 </html>

@@ -5,6 +5,8 @@ const User = require('../models/User');
 const Offer = require('../models/Offer');
 const Request = require('../models/Request');
 
+const { ensureAuthenticated } = require('../config/auth');
+
 // Home route
 // This route handles the main page of the application
 router.get('/', (req, res) => {
@@ -14,7 +16,7 @@ router.get('/', (req, res) => {
 // Register route
 // These routes handle user registration
 router.get('/register', (req, res) => {
-  res.render('register');
+  res.render('register', { user: req.user });
 });
 
 router.post('/register', async (req, res) => {
@@ -30,15 +32,9 @@ router.post('/register', async (req, res) => {
 
 // Login route
 // These routes handle user authentication using Passport.js
-router.get('/login', (req, res) => {
-  res.render('login');
+router.get('/login', (req, res, next) => {
+  res.render('login', { user: req.user });
 });
-
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login',
-}));
-
 // Logout route
 // This route handles user logout
 router.get('/logout', (req, res, next) => {
@@ -52,6 +48,12 @@ router.get('/logout', (req, res, next) => {
 
 // Offers routes
 // These routes handle the creation, viewing, and management of offers
+router.get('/offers', ensureAuthenticated, (req, res) => {
+  res.render('offers', { user: req.user });
+});
+
+module.exports = router;
+
 router.get('/offers', async (req, res) => {
   const offers = await Offer.find().populate('createdBy');
   res.render('offers', { offers });
@@ -78,6 +80,8 @@ router.delete('/offers/:id', async (req, res) => {
   await Offer.findByIdAndDelete(req.params.id);
   res.redirect('/offers');
 });
+
+
 
 // Requests routes
 // These routes handle the creation and management of requests for offers

@@ -41,6 +41,13 @@ app.use(methodOverride('_method'));
 // Set up routes
 app.use('/', require('./routes/index'));
 
+// Make user available in all templates
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
+
+
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
