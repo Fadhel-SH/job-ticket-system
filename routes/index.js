@@ -5,6 +5,7 @@ const User = require('../models/User');
 const Offer = require('../models/Offer');
 const Request = require('../models/Request');
 const { ensureAuthenticated } = require('../config/auth');
+var bcrypt = require('bcryptjs');
 
 // // Home route
 // router.get('/', (req, res) => {

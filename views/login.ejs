@@ -9,17 +9,12 @@
 <%- include('partials/header') %>
 <%- include('partials/navbar') %>
 <body>
+
   <% include('layout', { title: 'Login', body: '' }) %>
-  <div class="card">
-    <h2>Login</h2>
-    <form action="/login" method="POST" class="card">
-      <label for="user">User:</label>
-      <input type="user" id="user" name="user" required>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
-      <button type="submit">Login</button>
-    </form>
-  </div>  
+  
+  <%- include('partials/sign-in') %>
+
+
 </body>
 <%- include('partials/footer') %>
 </html>

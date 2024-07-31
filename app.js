@@ -18,6 +18,9 @@ require('./config/passport')(passport);
 // Connect to the database
 require('./config/database')
 
+// Connect to the auth
+require('./config/auth')
+
 
 // Middleware setup
 app.set('view engine', 'ejs'); // Use EJS as the view engine

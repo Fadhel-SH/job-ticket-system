@@ -9,22 +9,12 @@
 <body>
   <%- include('partials/header') %>
   <%- include('partials/navbar') %>
+
+
   <% include('layout', { title: 'Register', body: '' }) %>
-  <div class="card">
-    <h2>Register</h2>
-    <form action="/register" method="POST">
-      <label for="user">user:</label>
-      <input type="user" id="User" name="user" required>
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
-      <label for="role">Role:</label>
-      <select id="role" name="role" required>
-        <option value="customer">Customer</option>
-        <option value="user">User</option>
-      </select>
-      <button type="submit">Register</button>
-    </form>
-  </div>
+  
+  <%- include('partials/register') %>
+
 </body>
 <%- include('partials/footer') %>
 </html>
