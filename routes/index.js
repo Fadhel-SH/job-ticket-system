@@ -6,9 +6,28 @@ const Offer = require('../models/Offer');
 const Request = require('../models/Request');
 const { ensureAuthenticated } = require('../config/auth');
 
+// // Home route
+// router.get('/', (req, res) => {
+//   res.render('index', { user: req.user });
+// });
+
 // Home route
+router.get('/', async (req, res) => {
+  const offers = await Offer.find().populate('createdBy');
+  res.render('index', { user: req.user, offers });
+});
+
+// routes/index.js
 router.get('/', (req, res) => {
-  res.render('index', { user: req.user });
+  res.render('index', { title: 'Home' });
+});
+
+router.get('/about', (req, res) => {
+  res.render('about', { title: 'About' });
+});
+
+router.get('/contact', (req, res) => {
+  res.render('contact', { title: 'Contact' });
 });
 
 // Register route

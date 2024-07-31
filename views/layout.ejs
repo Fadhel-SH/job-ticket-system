@@ -3,12 +3,22 @@
 <head>
   <title><%= title %></title>
   <link rel="stylesheet" href="/css/styles.css">
+  <%- include('partials/stylesheet') %>
+  <%- include('partials/scriptjs') %>
+  <%- include('partials/scriptjs') %>
 </head>
 <body>
+  
+  <%- include('partials/header') %>
+  <%- include('partials/navbar') %>
+
+  <%- body %>
+
+  <%- include('partials/footer') %>
   <div class="container">
     <header>
       <nav>
-        <a href="/">Home</a>
+        <a href="/"><%= title %></a>
         <% if (!user) { %>
           <a href="/login">Login</a>
           <a href="/register">Register</a>

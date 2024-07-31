@@ -1,0 +1,14 @@
+<!-- navbar.ejs -->
+<nav>
+    <ul>
+      <% if (user) { %>
+        <li><a href="/logout">Logout</a></li>
+        <li><a href="/offers">View Offers</a></li>
+      <% } else { %>
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register">Register</a></li>
+      <% } %>
+    </ul>
+  </nav>
+</header>

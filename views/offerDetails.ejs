@@ -4,7 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Offer Details</title>
+  <%- include('partials/stylesheet') %>
+  <%- include('partials/scriptjs') %>
 </head>
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
 <body>
   <h1><%= offer.title %></h1>
   <p><%= offer.description %></p>
@@ -26,4 +30,5 @@
 
   <a href="/offers">Back to Offers</a>
 </body>
+<%- include('partials/footer') %>
 </html>
