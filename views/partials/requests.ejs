@@ -1,20 +1,22 @@
- <h1>Requests</h1>
-  <ul>
-    <% requests.forEach(request => { %>
-      <div class="card">
+<h1>Requests</h1>
+<ul>
+  <% requests.forEach(request => { %>
+    <div class="card">
       <li>
         Offer: <%= request.offerId.title %>
         Status: <%= request.status %>
-        <form action="/requests/<%= request._id %>" method="POST">
-          <input type="hidden" name="_method" value="PUT">
-          <select name="status">
-            <option value="pending" <%= request.status === 'pending' ? 'selected' : '' %>>Pending</option>
-            <option value="accepted" <%= request.status === 'accepted' ? 'selected' : '' %>>Accepted</option>
-            <option value="rejected" <%= request.status === 'rejected' ? 'selected' : '' %>>Rejected</option>
-          </select>
-          <button type="submit">Update</button>
-        </form>
+        <% if (user.role === 'admin' || user.role === 'customer') { %>
+          <form action="/requests/<%= request._id %>" method="POST">
+            <input type="hidden" name="_method" value="PUT">
+            <select name="status">
+              <option value="pending" <%= request.status === 'pending' ? 'selected' : '' %>>Pending</option>
+              <option value="accepted" <%= request.status === 'accepted' ? 'selected' : '' %>>Accepted</option>
+              <option value="rejected" <%= request.status === 'rejected' ? 'selected' : '' %>>Rejected</option>
+            </select>
+            <button type="submit">Update</button>
+          </form>
+        <% } %>
       </li>
     </div>
-    <% }) %>
-  </ul>
+  <% }) %>
+</ul>
