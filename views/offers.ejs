@@ -11,27 +11,9 @@
 <%- include('partials/navbar') %>
 <body>
   <% include('layout', { title: 'Offers', body: '' }) %>
-  <h1>Offers</h1>
-  <% if (user && user.role === 'customer') { %>
-    <div class="card">
-      <form action="/offers" method="POST" class="offer-form">
-        <input type="text" name="title" placeholder="Title" required>
-        <textarea name="description" placeholder="Description" required></textarea>
-        <input type="number" name="price" placeholder="Price">
-        <button type="submit">Add Offer</button>
-      </form>
-    </div>
-  <% } %>
-  <div class="offers-container">
-    <% offers.forEach(offer => { %>
-      <div class="offer-card">
-        <h2><%= offer.title %></h2>
-        <p><%= offer.description %></p>
-        <p><%= offer.price ? `Price: ${offer.price}` : 'Best Offer' %></p>
-      </div>
-    <% }) %>
-  </div>
-  
+  <%- include('partials/add_offers') %> 
+
+  <%- include('partials/offer-card') %>
 </body>
 <%- include('partials/footer') %>
 </html>
