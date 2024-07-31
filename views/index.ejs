@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%- include('partials/meta') %>
   <title>Home</title>
   <%- include('partials/stylesheet') %>
   <%- include('partials/scriptjs') %>
@@ -11,59 +10,17 @@
   <%- include('partials/header') %>
   <%- include('partials/navbar') %>
   <main>
-    <% if (user) { %>
-      <h1>Welcome, <%= user.username %></h1>
-    <% } else { %>
-      <h1>Welcome, Guest</h1>
-    <% } %>
+  <%- include('partials/welcome') %>
 
-  <!-- <% if (user) { %>
-    <h1>Welcome, <%= user.username %></h1>
-    <a href="/logout">Logout</a>
-    <a href="/offers">View Offers</a>
-  <% } else { %>
-    <h1>Welcome, Guest</h1>
-    <a href="/login">Login</a>
-    <a href="/register">Register</a>
-  <% } %> -->
 </body>
 
    <!-- Slideshow for Ads -->
-   <div class="slideshow-container">
-    <div class="mySlides fade">
-      <img src="/images/ad1.jpg" style="width:100%">
-    </div>
-    <div class="mySlides fade">
-      <img src="/images/ad2.jpg" style="width:100%">
-    </div>
-    <div class="mySlides fade">
-      <img src="/images/ad3.jpg" style="width:100%">
-    </div>
-  </div>
+   <%- include('partials/AdsSlideshow') %>
 
   <!-- Card View for Offers -->
-  <section class="offers">
-    <h2>Latest Offers</h2>
-
-  </section>
-
-    <!-- Additional Blocks or Features -->
-    <section class="features">
-      <h2>Features</h2>
-      <div class="feature-block">
-        <h3>Feature 1</h3>
-        <p>Description of feature 1.</p>
-      </div>
-      <div class="feature-block">
-        <h3>Feature 2</h3>
-        <p>Description of feature 2.</p>
-      </div>
-      <div class="feature-block">
-        <h3>Feature 3</h3>
-        <p>Description of feature 3.</p>
-      </div>
-      <!-- Add more features as needed -->
-    </section>
+  <%- include('partials/offerscardview') %>
+ <!-- Additional Blocks or Features -->
+  <%- include('partials/Features') %>
   </main>
   <%- include('partials/footer') %>
 </html>

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <%- include('partials/meta') %>
   <title><%= title %></title>
   <%- include('partials/stylesheet') %>
   <%- include('partials/scriptjs') %>
 
 </head>
-<body>
+
   
   <%- include('partials/header') %>
   <%- include('partials/navbar') %>
@@ -14,22 +15,6 @@
   <%- body %>
 
   <%- include('partials/footer') %>
-  <div class="container">
-    <header>
-      <nav>
-        <a href="/"><%= title %></a>
-        <% if (!user) { %>
-          <a href="/login">Login</a>
-          <a href="/register">Register</a>
-        <% } else { %>
-          <a href="/offers">Offers</a>
-          <a href="/logout">Logout</a>
-        <% } %>
-      </nav>
-    </header>
-    <main>
-      <%- body %>
-    </main>
-  </div>
-</body>
+
+
 </html>
