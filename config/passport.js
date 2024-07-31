@@ -9,35 +9,32 @@ const bcrypt = require('bcryptjs');
 
 // Export a function that configures the Passport.js authentication strategy
 module.exports = function(passport) {
-  // Configure the local strategy for Passport.js
   passport.use(
-    new LocalStrategy({ usernameField: 'email' }, async (email, password, done) => {
+    new LocalStrategy({ usernameField: 'username' }, async (username, password, done) => {
       try {
-        // Find the user by their email
-        const user = await User.findOne({ email: email });
-
-        // If the user is not found, return a false user and an error message
+        const user = await User.findOne({ username });
+        console.log("User from mongo:", user);
         if (!user) {
-          return done(null, false, { message: 'That email is not registered' });
+          console.log("User not found");
+          return done(null, false, { message: 'That username is not registered' });
         }
 
-        // Compare the provided password with the hashed password in the database
-        const isMatch = await bcrypt.compare(password, user.password);
+        console.log('Entered Password:', password);
+        console.log('Stored Hashed Password:', user.password);
 
-        // If the passwords match, return the user object
+        const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
+          console.log("Password matched");
           return done(null, user);
-        // If the passwords don't match, return a false user and an error message
         } else {
+          console.log("Password did not match");
           return done(null, false, { message: 'Password incorrect' });
         }
       } catch (err) {
-        // If there's an error, log it and return the error
-        console.error(err);
+        console.error('Error during authentication:', err);
         return done(err);
       }
-    })
-  );
+    }))
 
   // Serialize the user object to store in the session
   passport.serializeUser((user, done) => {
