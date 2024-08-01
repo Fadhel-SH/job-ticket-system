@@ -103,30 +103,30 @@ router.get('/offers', ensureAuthenticated, async (req, res) => {
   res.render('offers', { user: req.user, offers });
 });
 
-// router.post('/offers', ensureAuthenticated, async (req, res) => {
-//   const { title, description, price, bestOffer } = req.body;
-//   const offer = new Offer({ title, description, price, bestOffer, createdBy: req.user._id });
-//   await offer.save();
-//   req.flash('success_msg', 'Offer created');
-//   res.redirect('/offers');
-// });
-
 router.post('/offers', ensureAuthenticated, async (req, res) => {
   const { title, description, price, bestOffer } = req.body;
-  try {
-    const offer = new Offer({ title, description, price, bestOffer, createdBy: req.user._id });
-    await offer.save();
-
-    // Update the customer's offers array
-    await User.findByIdAndUpdate(req.user._id, { $push: { offers: offer._id } });
-
-    req.flash('success_msg', 'Offer created successfully');
-    res.redirect('/offers');
-  } catch (error) {
-    req.flash('error_msg', 'Error creating offer');
-    res.redirect('/offers');
-  }
+  const offer = new Offer({ title, description, price, bestOffer, createdBy: req.user._id });
+  await offer.save();
+  req.flash('success_msg', 'Offer created');
+  res.redirect('/offers');
 });
+
+// router.post('/offers', ensureAuthenticated, async (req, res) => {
+//   const { title, description, price, bestOffer } = req.body;
+//   try {
+//     const offer = new Offer({ title, description, price, bestOffer, createdBy: req.user._id });
+//     await offer.save();
+
+//     // Update the customer's offers array
+//     await User.findByIdAndUpdate(req.user._id, { $push: { offers: offer._id } });
+
+//     req.flash('success_msg', 'Offer created successfully');
+//     res.redirect('/offers');
+//   } catch (error) {
+//     req.flash('error_msg', 'Error creating offer');
+//     res.redirect('/offers');
+//   }
+// });
 
 
 router.get('/offers/:id', ensureAuthenticated, async (req, res) => {
