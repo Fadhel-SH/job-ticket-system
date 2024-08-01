@@ -1,5 +1,6 @@
 <h1>Requests</h1>
-<ul>
+<% if (requests.length > 0) { %>
+  <ul>
   <% requests.forEach(request => { %>
     <div class="card">
       <li>
@@ -18,5 +19,10 @@
         <% } %>
       </li>
     </div>
-  <% }) %>
-</ul>
+    <% }) %>
+  </ul>
+<% } else { %>
+  <div class="card">
+  <p>No requests found.</p>
+  </div>
+<% } %>
